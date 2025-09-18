@@ -107,6 +107,8 @@ else:
     }
 
 
+if not DEBUG:
+    PORT = int(config('PORT', default=8000))
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
