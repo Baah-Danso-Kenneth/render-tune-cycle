@@ -9,19 +9,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 ENVIRONMENT = config('ENVIRONMENT', default="production")
 
-ENVIRONMENT = "production"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY =  config('SECRET_KEY')
 
+DEBUG=True
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if ENVIRONMENT =="development":
-    DEBUG = True
-else:
-    DEBUG = False
+# if ENVIRONMENT =="development":
+#     DEBUG = True
+# else:
+#     DEBUG = False
 
 
 
@@ -117,12 +117,13 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://render-tune-cycle.onrender.com",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
 # Static files configuration
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']  # remove if you don’t use it
+# STATICFILES_DIRS = [BASE_DIR / 'static']  # remove if you don’t use it
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Media files configuration
