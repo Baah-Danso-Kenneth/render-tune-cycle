@@ -9,11 +9,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 ENVIRONMENT = config('ENVIRONMENT', default="production")
 
+ENVIRONMENT = "production"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY =  config('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if ENVIRONMENT =="development":
@@ -202,3 +204,6 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL='apps_users.User'
+
+print(f"RENDER DEBUG - Environment: {ENVIRONMENT}")
+print(f"RENDER DEBUG - Database config: {DATABASES if 'DATABASES' in locals() else 'Not set yet'}")
