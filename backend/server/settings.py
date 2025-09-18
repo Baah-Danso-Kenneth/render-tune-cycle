@@ -26,7 +26,7 @@ if ENVIRONMENT == "development":
     ALLOWED_HOSTS = ['localhost', '127.0.0.1','*']
 
 else:
-    ALLOWED_HOSTS = ['strike-free-leasingmusic-tune-cycle.onrender.com']
+    ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -48,8 +48,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'cloudinary_storage',
-    'django.contrib.staticfiles',
     'cloudinary',
+    'django.contrib.staticfiles',
     'django_filters'
 
 ]
