@@ -14,11 +14,30 @@ ENVIRONMENT = config('ENVIRONMENT', default="production")
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
-# Fix DEBUG setting based on environment
-if ENVIRONMENT == "development":
-    DEBUG = True
-else:
-    DEBUG = False
+# Keep DEBUG=True for now to see errors, but add proper logging
+DEBUG = True
+
+# Add proper logging for production debugging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'cloudinary': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
 
 ALLOWED_HOSTS = ['render-tune-cycle.onrender.com', 'localhost', '127.0.0.1']
 
@@ -95,14 +114,18 @@ else:
         'default': dj_database_url.parse(config('DATABASE_URL'))
     }
 
-# Configure Cloudinary properly
-CLOUDINARY_URL = config('CLOUDINARY_URL')
-cloudinary.config(
-    cloud_name='dnbu2zyuo',
-    api_key='366978591544582',
-    api_secret='so5cAnWOfMOkROkMkZVrDdlMRIQ',
-    secure=True
-)
+# Configure Cloudinary properly - handle missing env vars gracefully
+try:
+    CLOUDINARY_URL = config('CLOUDINARY_URL')
+    cloudinary.config(
+        cloud_name='dnbu2zyuo',
+        api_key='366978591544582',
+        api_secret='so5cAnWOfMOkROkMkZVrDdlMRIQ',
+        secure=True
+    )
+    print("CLOUDINARY DEBUG - Configuration successful")
+except Exception as e:
+    print(f"CLOUDINARY DEBUG - Configuration failed: {e}")
 
 # Storage configuration
 if ENVIRONMENT == 'development':
