@@ -23,7 +23,13 @@ else:
     DEBUG = False
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','*']
+if ENVIRONMENT == "development":
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+else:
+    ALLOWED_HOSTS = ['render-tune-cycle.onrender.com']
+
+
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1','render-tune-cycle.onrender.com']
 
 
 # Application definition
