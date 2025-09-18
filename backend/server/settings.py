@@ -25,7 +25,7 @@ DEBUG=True
 
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','render-tune-cycle.onrender.com']
+ALLOWED_HOSTS = ['render-tune-cycle.onrender.com']
 
 # Application definition
 
