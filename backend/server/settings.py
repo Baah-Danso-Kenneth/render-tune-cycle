@@ -26,7 +26,7 @@ if ENVIRONMENT == "development":
     ALLOWED_HOSTS = ['localhost', '127.0.0.1','*']
 
 else:
-    ALLOWED_HOSTS = ['render-tune-cycle.onrender.com']
+    ALLOWED_HOSTS = ['render-tune-cycle.onrender.com','*']
 
 # Application definition
 
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django_filters',
 
     #Local Apps
     'apps.auths',
@@ -106,9 +107,6 @@ else:
         'default': dj_database_url.parse(config('DATABASE_URL'))
     }
 
-
-if not DEBUG:
-    PORT = int(config('PORT', default=8000))
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
