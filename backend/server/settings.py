@@ -9,7 +9,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 ENVIRONMENT = config('ENVIRONMENT', default="production")
 
-ENVIRONMENT = "production"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -23,8 +22,11 @@ else:
     DEBUG = False
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','*']
+if ENVIRONMENT == "development":
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1','*']
 
+else:
+    ALLOWED_HOSTS = ['render-tune-cycle.onrender.com']
 
 # Application definition
 
@@ -121,7 +123,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 # Static files configuration
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [BASE_DIR / 'static']  # remove if you don’t use it
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Media files configuration
@@ -130,11 +132,22 @@ MEDIA_URL = '/media/'
 if ENVIRONMENT == 'development':
     MEDIA_ROOT = BASE_DIR / 'media'
 else:
-    STORAGES = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    CLOUDINARY_STORAGE = {
-        'CLOUDINARY_URL': config('CLOUDINARY_URL')
+    STORAGES = {
+        "default": {
+            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
     }
 
+    CLOUDINARY_STORAGE = {
+        "CLOUDINARY_URL": config("CLOUDINARY_URL"),
+    }
+
+    # 👇 Add this for compatibility with cloudinary_storage
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 
 # Password validation
