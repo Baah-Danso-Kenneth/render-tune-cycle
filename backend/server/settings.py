@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.staticfiles',
 
     #Local Apps
     'apps.auths',
@@ -46,7 +47,6 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'cloudinary_storage',
-    'django.contrib.staticfiles',
     'cloudinary',
 
 ]
@@ -86,9 +86,7 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-
-if ENVIRONMENT == 'development':
-    DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': config('DB_NAME'),
@@ -96,14 +94,8 @@ if ENVIRONMENT == 'development':
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
         'PORT': config('DB_PORT')
-        }
     }
-else:
-    import dj_database_url
-    DATABASES = {
-        'default': dj_database_url.parse(config('DATABASE_URL'))
-    }
-
+}
 
 
 SIMPLE_JWT = {
@@ -122,18 +114,11 @@ CORS_ALLOW_CREDENTIALS = True
 # Static files configuration
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Changed from 'media' to 'staticfiles'
 
 # Media files configuration
 MEDIA_URL = '/media/'
-
-if ENVIRONMENT == 'development':
-    MEDIA_ROOT = BASE_DIR / 'media'
-else:
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    CLOUDINARY_STORAGE = {
-        'CLOUDINARY_URL': config('CLOUDINARY_URL')
-    }
+MEDIA_ROOT = BASE_DIR / 'media'  # This remains as 'media'
 
 
 
